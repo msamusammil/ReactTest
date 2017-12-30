@@ -7,7 +7,7 @@ import { fromJS } from 'immutable';
  * and returns it, nothing more. Not listening to any actions
  * at the moment. This will populate the state
  */
-import { DEFAULT_ACTION, PRODUCT_LIST_REQUEST, PRODUCT_LIST_SUCCESS } from '../constants/productsActionType';
+import { DEFAULT_ACTION, PRODUCT_LIST_REQUEST, PRODUCT_LIST_SUCCESS, PRODUCT_LIST_FAILURE } from '../constants/productsActionType';
 
 const initialState = fromJS({
     products: null,
@@ -25,12 +25,14 @@ function products(state = initialState, action){
           return state.merge({
             userpayload: action.params, showErrorMessage: null
           });
-          // return state;
         case PRODUCT_LIST_SUCCESS:
           return state.merge({
             products: action.userResponse,
           });
-          // return state;
+        case PRODUCT_LIST_FAILURE:
+          return state.merge({
+            error: action.errorResponse,
+          });
         default:
           return state;
       }

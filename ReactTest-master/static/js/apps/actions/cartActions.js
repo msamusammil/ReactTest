@@ -7,14 +7,14 @@ import {ADD_CART, REMOVE_CART } from '../constants/cartActionTypes';
 
 export function addToCart(item) {
     return {
-        type: 'ADD_CART',
+        type: ADD_CART,
         item: item
     };
   }
   
   export function removeFromCart(item) {
     return {
-        type: 'REMOVE_CART',
+        type: REMOVE_CART,
         item: item
     };
   }

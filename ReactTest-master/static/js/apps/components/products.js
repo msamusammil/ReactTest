@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import PropTypes from 'prop-types';
 import { addToCart } from '../actions/cartActions';
 import * as ActionCreators from '../actions/productActions';
 
@@ -12,9 +13,6 @@ class Products extends Component {
     this.props.actions.getProducts();
   }
   render() {
-
-    const { actions } = this.props;
-
     const productList = this.props.products.products && this.props.products.products.map( (item,index)  => {
       return <div className="item  col-xs-4 col-lg-4 grid-group-item" key={index}>
             <div className="thumbnail">
@@ -42,19 +40,30 @@ class Products extends Component {
 
     return (
       <div className= "row">
-         {productList}
+        <div className="panel panel-primary">
+            <div className="panel-heading">
+                  <h3 className="panel-title">Products</h3>
+            </div>
+            <div className="panel-body">
+                  <div  className="row">
+                      {productList}
+                  </div>
+            </div>
+        </div>   
       </div>
     );
   }
 }
 Products.propTypes = {
-  actions: React.PropTypes.object,
-  products: React.PropTypes.object,
+  actions: PropTypes.object,
+  products: PropTypes.object,
+  addToCart: PropTypes.func,
+  
 };
 
 
 
-function mapStateToProps(state, props) {
+function mapStateToProps(state) {
   return {
       products: (state.products).toJS()
   };

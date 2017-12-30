@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { addToCart } from './actions/cartActions';
-import * as ActionCreators from './actions/productActions';
 import Products from './components/Products';
 import Cart from './components/Cart';
-import { toJS } from 'immutable';
 
 // import '../../css/main.css';
 
@@ -17,13 +12,9 @@ import { toJS } from 'immutable';
 class App extends Component {
   
   render() { 
-
-    console.log('App',);  
-
     return (
       <div className="container">
         <Cart/>
-        <h1>Products</h1>
         <Products />
       </div>
     );

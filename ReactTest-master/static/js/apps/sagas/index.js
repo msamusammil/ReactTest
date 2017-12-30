@@ -1,6 +1,6 @@
 import { fork, call, takeEvery, all, put } from 'redux-saga/effects';
 import axios from 'axios';
-import { getProductsSuccess } from '../actions/productActions';
+import { getProductsSuccess, getProductsFailure } from '../actions/productActions';
 import { PRODUCT_LIST_REQUEST } from '../constants/productsActionType';
 
 export function* getAllProducts() {
@@ -11,7 +11,7 @@ export function* getAllProducts() {
         yield put(getProductsSuccess(userresponse.data.catalog));
       }
     } catch (e) {
-        yield put(userSignupFailure(e.message));
+        yield put(getProductsFailure(e.message));
       }
   }
 export function* watchNavigate() {

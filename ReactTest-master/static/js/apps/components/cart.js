@@ -1,15 +1,24 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { removeFromCart } from '../actions/cartActions';
-import { toJS } from 'immutable';
 
 class Cart extends Component {
-  render() {
+
+
+componentWillReceiveProps(nextprops) {
+    if(nextprops.cart.length !== this.props.cart.length)
+        {
+            window.scrollTo(0,0);
+        }
+
+}
+render() {
     /**
      * this.props.cart is populated through the redux store and mapStateToProps
      * this.props.removeFromCart is added through mapDispatchToProps
      */
-    const cartList = this.props.cart.map(( item, index) =>{
+    const cartList = this.props.cart && this.props.cart.length > 0 ? this.props.cart.map(( item, index) =>{
       return <div className="item  col-xs-4 col-lg-4 grid-group-item" key={index}>
             <div className="thumbnail">
           <img className="group list-group-image" src={item.imageURL} alt="" />
@@ -32,26 +41,35 @@ class Cart extends Component {
           </div>
       </div>
   </div>
-    });
+    }) : 'No Items in your cart.';
     let sum = 0;
-     sum = this.props.cart.reduce(function(sum, elem) {
+     sum = this.props.cart && this.props.cart.reduce(function(sum, elem) {
       return sum + elem.price;
   }, 0);
+    let count = 0;
+    count = this.props.cart && this.props.cart.length;
     return (
-      <div>
-        <h1>Cart Details</h1>
         <div className="row">
-        <button type="button" className="btn btn-primary">Cart Total Value <span className="badge">${sum}</span></button>
+            <div className="panel panel-primary">
+                <div className="panel-heading">
+                    <h3 className="panel-title">Cart Details:  Total: ${sum} | Count: {count}</h3>
+                </div>
+                <div className="panel-body">
+                    <div className="row text-center">
+                        {cartList}
+                    </div>
+                </div>
+            </div>
         </div>
-        <div  className="row">
-          {cartList}
-        </div>
-      </div>
     );
   }
 }
-
-function mapStateToProps(state, props) {
+Cart.propTypes = {
+    cart: PropTypes.array,
+    removeFromCart: PropTypes.func,
+    
+  };
+function mapStateToProps(state) {
     return {
         cart: state.cart
     };
